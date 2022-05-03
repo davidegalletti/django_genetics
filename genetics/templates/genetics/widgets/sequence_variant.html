@@ -1,0 +1,8 @@
+{% load i18n %}
+<input type="text" genetics="sequence_variant" genetics_mode="sequence_variant" {% if widget.value %}value="{{ widget.value }}"{% endif %}
+       name="{{ widget.name }}" {% include "django/forms/widgets/attrs.html" %}
+       placeholder="{% trans "Sequence Variant" %}"
+       default_placeholder="{% trans "Sequence Variant" %}"
+        />
+<div id="{{ widget.attrs.id }}_error" class="has-error"></div>
+<p id="{{ widget.attrs.id }}_notes" class="help-block"></p>

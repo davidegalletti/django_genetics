@@ -1,0 +1,10 @@
+{% load i18n %}
+
+
+<input type="text" genetics="sequence_variant_from_gene" genetics_mode="autocomplete" {% if widget.value %}value="{{ widget.value }}"{% endif %}
+       name="{{ widget.name }}" {% include "django/forms/widgets/attrs.html" %}
+       placeholder="{% trans "Type full HGNC gene approved symbol first, then select transcript" %}"
+       default_placeholder="{% trans "Type full HGNC gene approved symbol, then select transcript" %}"
+        />
+<div id="{{ widget.attrs.id }}_error" class="has-error"></div>
+<p id="{{ widget.attrs.id }}_notes" class="help-block"></p>

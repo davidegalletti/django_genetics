@@ -1,0 +1,4 @@
+include LICENSE
+include README.rst
+recursive-include genetics/*/ *
+recursive-exclude genetics/*/ *.pyc

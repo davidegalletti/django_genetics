@@ -1,0 +1,8 @@
+.transcript {
+    cursor: pointer;
+}
+
+.transcript:hover {
+    color: #FFFFFF;
+    background: #2B6FB6;
+}

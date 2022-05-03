@@ -1,0 +1,7 @@
+{% load i18n %}
+<input type="text" genetics="gene"  {% include "genetics/widgets/attrs.html" with extra_id="_autocomplete" %}
+       placeholder="{% trans "Type HGNC gene approved symbol or phenotype" %}"  {% if gene %}value="{{ gene }}"{% endif %}  />
+<input type="hidden"
+       {% if gene %}value="{{ gene.id }}"{% endif %}
+       {% include "genetics/widgets/attrs.html" with extra_id="_id" %} name="{{ widget.name }}" />
+<p id="{{ widget.attrs.id }}_notes" class="help-block">{% if gene %}<a target="_blank" href="https://omim.org/entry/{{ gene.mim_number }}">More info on Omim.org's page.</a>{% endif %}</p>
