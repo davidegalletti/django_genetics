@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import csv
+import csv, os
 import logging
 from django.db import transaction
 from django.core.management.base import BaseCommand
@@ -53,9 +53,10 @@ class Command(BaseCommand):
 
         try:
             with transaction.atomic():
+                this_dir = os.path.dirname(os.path.abspath(__file__))
                 ############# HGNC GENE
                 if True:
-                    file_path = ("%s/../genetics/data/hgnc/HGNC Gene w alias.csv" % settings.BASE_DIR)
+                    file_path = ("%s/../../data/hgnc/HGNC Gene w alias.csv" % this_dir)
                     logger.info("Importing HGNC GENE w alias.csv")
                     with open(file_path, 'r', errors='ignore') as file_hgnc_gene:
                         csv_reader = csv.reader(file_hgnc_gene, delimiter=',', quotechar='"')
@@ -78,7 +79,7 @@ class Command(BaseCommand):
                                     logger.error("Non blocking error importing HGNC Gene: %s" % (str(ex)))
                 ############# OMIM MORBID MAP
                 if True:
-                    file_path = ("%s/../genetics/data/omim/morbidmap.csv" % settings.BASE_DIR)
+                    file_path = ("%s/../../data/omim/morbidmap.csv" % this_dir)
                     logger.info("Importing OMIM morbidmap.csv")
                     with open(file_path, 'r', errors='ignore') as file_omim_morbidmap:
                         csv_reader = csv.reader(file_omim_morbidmap, delimiter=',', quotechar='"')
@@ -102,7 +103,7 @@ class Command(BaseCommand):
                                     logger.error("Non blocking error importing OMIM morbidmap: %s" % (str(ex)))
                 ############# OMIM MIMTITLES
                 if True:
-                    file_path = ("%s/../genetics/data/omim/mimTitles.csv" % settings.BASE_DIR)
+                    file_path = ("%s/../../data/omim/mimTitles.csv" % this_dir)
                     logger.info("Importing OMIM mimTitles.csv")
                     with open(file_path, 'r', errors='ignore') as file_omim_titles:
                         csv_reader = csv.reader(file_omim_titles, delimiter=',', quotechar='"')
@@ -126,7 +127,7 @@ class Command(BaseCommand):
                                         og.save()
                                 except Exception as ex:
                                     # se OmimGene non esiste è perché non è presente in morbidmap
-                                    logger.error("Non blocking error importing OMIM morbidmap: %s" % (str(ex)))
+                                    logger.error("Non blocking error importing OMIM MIMTITLES: %s" % (str(ex)))
                                     logger.error("Row: %s" % row)
         except Exception as ex:
             logger.error("Blocking error importing HGNC / OMIM data: %s" % str(ex))
