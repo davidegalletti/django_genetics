@@ -10,7 +10,7 @@ from genetics.models import HgncGene
 def gene(request):
     data = 'fail'
     try:
-        if request.is_ajax():
+#        if request.is_ajax():
             q = request.GET.get('term', '')
             # limito a 25 il n. di record per evitare eccessivi rallentamenti per ricerca
             genes = list(HgncGene.objects.filter(Q(approved_symbol__icontains=q) | Q(alias_symbols__icontains=q) |
@@ -57,7 +57,7 @@ def transcripts(request):
         'status': ApiInvoker.FAILURE
     }
     try:
-        if request.is_ajax():
+#        if request.is_ajax():
             mutalyzer_cs_endpoint = "https://mutalyzer.nl/json/getTranscriptsByGeneName"
             url = mutalyzer_cs_endpoint + ("?build=hg38&name=%s" % request.GET['name'])
             aics = ApiInvoker(url=url)
@@ -79,8 +79,8 @@ def transcripts(request):
             if aics.exception:
                 data['exception'] = aics.exception
             data['status'] = ApiInvoker.SUCCESS
-        else:
-            data['error'] = "Generic error."
+#        else:
+#            data['error'] = "Generic error."
     except:
         pass
     data['name'] = request.GET['name']
@@ -94,7 +94,7 @@ def sequence_variant(request):
         'status': ApiInvoker.FAILURE
     }
     try:
-        if request.is_ajax():
+#        if request.is_ajax():
             mutalyzer_cs_endpoint = "https://mutalyzer.nl/json/checkSyntax"
             url = mutalyzer_cs_endpoint + ("?variant=%s" % request.GET['sv'])
             aics = ApiInvoker(url=url)
@@ -215,8 +215,8 @@ def sequence_variant(request):
                     except:
                         pass
             data['status'] = ApiInvoker.SUCCESS
-        else:
-            data['error'] = "Generic error."
+#        else:
+#            data['error'] = "Generic error."
     except:
         pass
     data['id'] = request.GET['id']
