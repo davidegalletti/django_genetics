@@ -123,3 +123,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# La versione va scritta qui, su setup.cfg e su genetics/__init__.py
+version = "0.7"
+version_comment = "0.7 version number in all files"
