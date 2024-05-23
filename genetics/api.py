@@ -1,12 +1,28 @@
-import json
+import functools, json
 
+from django.conf import settings
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
-from genetics.utils import ApiInvoker
+
 from genetics.models import OmimGene
 from genetics.models import HgncGene
+from genetics.utils import ApiInvoker
+
+from importlib import import_module
+
+def login_required_decorator(func=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
+    def decorator(view_func):
+        @functools.wraps(view_func)
+        def _wrapped_view(request, *args, **kwargs):
+            return view_func(request, *args, **kwargs)
+
+if hasattr(settings, "LOGIN_REQUIRED_MODULE") and hasattr(settings, "LOGIN_REQUIRED_DECORATOR"):
+    lrm = import_module(getattr(settings, "LOGIN_REQUIRED_MODULE"))
+    login_required_decorator = getattr(lrm, getattr(settings, "LOGIN_REQUIRED_DECORATOR"))
 
 
+@login_required_decorator
 def gene(request):
     data = 'fail'
     try:
@@ -49,6 +65,7 @@ def gene(request):
     return HttpResponse(data, mimetype)
 
 
+@login_required_decorator
 def transcripts(request):
     data = {
         'transcripts': [],
@@ -83,6 +100,7 @@ def transcripts(request):
     return JsonResponse(data)
 
 
+@login_required_decorator
 def sequence_variant(request):
     data = {
         'notes': "",
